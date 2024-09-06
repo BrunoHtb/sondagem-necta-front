@@ -1,11 +1,11 @@
 import React from 'react';
 import './styles.css';
 
-import logo from '../../assets/LogoEsteio2.png'
+import logo from '../../assets/logo vertical assinatura_azul _fundo branco.jpg'
 
 export default function Login() {
     return (
-        <div className="logint-container">
+        <div className="login-container">
             <section className="form">
                 <img src={logo} alt="Logo" />
                 <form>
@@ -13,7 +13,7 @@ export default function Login() {
                     <input placeholder="Username" />
                     <input type="password" placeholder="Password" />
 
-                    <button type="submit">Login</button>
+                    <button className='button' type="submit">Login</button>
                 </form>
             </section>
         </div>
