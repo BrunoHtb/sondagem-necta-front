@@ -1,41 +1,43 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory, useNavigate } from 'react-router-dom';
 import { FiPower } from 'react-icons/fi';
 
 import logoImage from '../../assets/logo vertical assinatura_azul _fundo branco.jpg';
+import api from '../../services/api';
 import './styles.css';  
 
 export default function CadastroPage() {
+    const [cadastros, setCadastros] = useState([]);
+    const userName = localStorage.getItem('usuario');
+
+    const navigate = useNavigate();
     const [nome, setNome] = useState('');
     
-    // Lista de clientes (dados fictícios)
-    const [clients, setClients] = useState([
-      { id: 1, nome: "Microsoft", responsavel: "Otto", contato: "10665544", status: "Ativo" },
-      { id: 2, nome: "Amazon", responsavel: "Willian", contato: "55448899", status: "Desativado" },
-      { id: 3, nome: "Google", responsavel: "Jack", contato: "66554433", status: "Em Análise" },
-      { id: 4, nome: "Facebook", responsavel: "Kevin", contato: "75881515", status: "Ativo" },
-      { id: 5, nome: "Twitter", responsavel: "Jack", contato: "00256548", status: "Ativo" },
-    ]);
-  
+    useEffect(() => {
+      api.get('/api/v1/cadastro/').then(response => {
+        setCadastros(response.data);
+      });
+    });
+
     const handleSubmit = (e) => {
       e.preventDefault();
       if (nome) {
         const newClient = {
-          id: clients.length + 1,
+          id: cadastros.length + 1,  // Usa o tamanho do array de cadastros para gerar um id
           nome: nome,
           responsavel: "Novo",
           contato: "00000000",
           status: "Ativo"
         };
-        setClients([...clients, newClient]);
-        setNome('');
+        setCadastros([...cadastros, newClient]);  // Atualiza os cadastros com o novo cliente
+        setNome('');  // Limpa o campo de nome
       }
     };
   
     const handleDeactivate = (id) => {
-      setClients(
-        clients.map((client) =>
-          client.id === id ? { ...client, status: "Desativado" } : client
+      setCadastros(
+        cadastros.map((cadastro) =>
+          cadastro.id === id ? { ...cadastro, status: "Desativado" } : cadastro
         )
       );
     };
@@ -66,23 +68,23 @@ export default function CadastroPage() {
                 <tr>
                 <th>#</th>
                 <th>Nome</th>
-                <th>Responsável</th>
-                <th>Contato</th>
-                <th>Situação</th>
+                <th>Profundidade Programada</th>
+                <th>Profundidade Final</th>
+                <th>Status</th>
                 <th>Opções</th>
                 </tr>
             </thead>
             <tbody>
-                {clients.map((client, index) => (
-                <tr key={client.id}>
+                {cadastros.map((cadastro, index) => (
+                <tr key={cadastro.id}>
                     <td>{index + 1}</td>
-                    <td>{client.nome}</td>
-                    <td>{client.responsavel}</td>
-                    <td>{client.contato}</td>
-                    <td>{client.status}</td>
+                    <td>{cadastro.nomePonto}</td>
+                    <td>{cadastro.profundidadeProgramada}</td>
+                    <td>{cadastro.profundidadeFinal}</td>
+                    <td>{cadastro.statusSondagem}</td>
                     <td>
                     <button className="btn-edit">✏️ Editar</button>
-                    <button className="btn-deactivate" onClick={() => handleDeactivate(client.id)}>
+                    <button className="btn-deactivate" onClick={() => handleDeactivate(cadastro.id)}>
                         🛑 Desativar
                     </button>
                     </td>
