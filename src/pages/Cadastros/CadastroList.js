@@ -4,7 +4,7 @@ import { FiPower } from 'react-icons/fi';
 
 import logoImage from '../../assets/logo vertical assinatura_azul _fundo branco.jpg';
 import api from '../../services/api';
-import './styles.css';  
+import './CadastroList.css';  
 
 export default function CadastroPage() {
     const [cadastros, setCadastros] = useState([]);
@@ -73,7 +73,7 @@ export default function CadastroPage() {
                                 <td>{cadastro.profundidadeFinal}</td>
                                 <td>{cadastro.statusSondagem}</td>
                                 <td>
-                                    <button className="btn-edit">✏️ Editar</button>
+                                    <Link to={`/cadastro/edit/${cadastro.id}`} className="btn-edit">✏️ Editar</Link>
                                     <button className="btn-deactivate" >
                                         🛑 Desativar
                                     </button>
