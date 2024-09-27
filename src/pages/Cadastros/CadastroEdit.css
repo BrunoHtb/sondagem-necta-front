@@ -1,5 +1,20 @@
 .form-container {
-    max-width: 600px;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas com divisão proporcional */
+    grid-gap: 20px; /* Espaçamento entre os campos */
+}
+
+.page-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas de tamanho igual */
+    grid-gap: 20px;
+    max-width: 1200px;
     margin: auto;
     padding: 20px;
     background-color: #f9f9f9;
@@ -7,24 +22,89 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
+
+.select-field select {
+    margin-top: 16px;
 }
 
-.input-field {
+.input-field, .select-field {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 15px;
+    width: 100%; 
 }
 
-.input-field label {
-    display: block;
+.input-field input, .select-field select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%; /* Garante que os inputs e selects ocupem toda a largura */
+    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
+    height: 40px; /* Ajusta a altura para ser igual entre input e select */
+}
+
+select-field label, .input-field label, .select-field label {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.input-field input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+select-field select:focus, .input-field input:focus {
+    outline: none;
+    border-color: #666; /* Cor da borda ao focar */
+}
+
+.title {
+    grid-column: span 2; /* Faz o título ocupar as duas colunas no grid */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Responsividade: para telas menores */
+@media (max-width: 600px) {
+    .form-container {
+        grid-template-columns: 1fr; /* Muda para 1 coluna em telas pequenas */
+    }
+}
+
+
+
+/* Estilo da área do mapa */
+.map-container {
+    background-color: #eaeaea;
+    height: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}
+
+/* Estilo da área de fotos */
+.photo-gallery {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.photo-gallery img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* Para telas menores */
+@media (max-width: 800px) {
+    .page-container {
+        grid-template-columns: 1fr; /* Muda para uma única coluna em telas pequenas */
+    }
 }
