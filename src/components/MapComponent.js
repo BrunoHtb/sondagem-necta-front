@@ -29,14 +29,12 @@ const RecenterMap = ({ position }) => {
 
 function MapComponent ( {cadastro, zone} ){
     const [position, setPosition] = useState([-23.5505, -46.6333]); 
-    console.log(cadastro)
     useEffect(() => {
         if (cadastro && zone) {
             const latitudeUtmNumerico = parseFloat(cadastro.latitudeUTM.replace(',', '.'));
             const longitudeUtmNumerico = parseFloat(cadastro.longitudeUTM.replace(',', '.'));
             const [longitude, latitude] = utmToLatLng(latitudeUtmNumerico, longitudeUtmNumerico, zone);
             setPosition([latitude, longitude]);  
-            console.log(latitude, longitude);
         }
     }, [cadastro, zone]);
 

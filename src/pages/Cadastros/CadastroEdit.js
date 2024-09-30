@@ -39,10 +39,13 @@ export default function CadastroEdit() {
         return <div>Carregando...</div>; 
     }
 
+    const fotosExecucao = cadastro.caminhoFotoExecucao ? cadastro.caminhoFotoExecucao.split(';').slice(0, -1) : [];
+    const fotosColeta = cadastro.caminhoFotoColeta ? cadastro.caminhoFotoColeta.split(';') : [];
+    const descricaoColeta = cadastro.descricaoColeta ? cadastro.descricaoColeta.split(';') : [];
+    
     return (
         <div className="page-container">
             <div className="form-container">
-                <h2>Editar Cadastro</h2>
                 <form>
                     <div className="input-field">
                         <InputField label="Nome" name="nome" value={cadastro.nome} />
@@ -80,20 +83,40 @@ export default function CadastroEdit() {
                     <div className="input-field">
                         <InputField label="Equipe" name="equipe" value={cadastro.equipe} />
                     </div>
+
+                    {fotosColeta.map((foto, index) => (
+                        <div key={index} className="photo-description-container">
+                                <InputField
+                                    label={`${index} Metros`}
+                                    name={`descricao_foto_${index + 1}`}
+                                    value={descricaoColeta[index] || ''}
+                                />
+                                <img src={foto.trim()} alt={`Foto ${index + 1}`} />                        
+                        </div>               
+                    ))}
                 </form>
             </div>
 
             <div>
-                {/* Seção do mapa */}
                 <div className="map-container">
                     <Map cadastro={cadastro} zone={23}/>
                 </div>
 
-                {/* Seção de fotos */}
                 <div className="photo-gallery">
-                    <h3>Galeria de Fotos</h3>
-                    <img src="https://via.placeholder.com/300" alt="Placeholder" />
-                    <img src="https://via.placeholder.com/300" alt="Placeholder" />
+                    {fotosExecucao.map((foto, index) => (
+                        <div className="photo-description-container">
+                            <label>Panoramica {index+1}:</label>
+                            <img key={index} src={foto.trim()} alt={`Foto ${index + 1}`} />
+                        </div>
+                    ))}
+                    <div className="photo-description-container">
+                        <label>Buraco Fechado</label>
+                        <img src={cadastro.caminhoFotoFuroFechado} alt="Placeholder" />
+                    </div>
+                    <div>
+                        <label>Boletim</label>
+                        <img src={cadastro.caminhoFotoBoletim} alt="Placeholder" />
+                    </div>
                 </div>
             </div>
         </div>
