@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiPower } from 'react-icons/fi';
 
-import logoImage from '../../assets/logo vertical assinatura_azul _fundo branco.jpg';
-import api from '../../services/api';
+import apiBase from '../../services/apiBase';
 import './CadastroList.css';  
 
 export default function CadastroPage() {
@@ -13,7 +11,7 @@ export default function CadastroPage() {
     const userName = localStorage.getItem('usuario');
     
     useEffect(() => {
-        api.get('/api/v1/cadastro/').then(response => {
+        apiBase.get('/cadastro').then(response => {
             setCadastros(response.data);
             setFilteredCadastros(response.data); 
         });
@@ -28,18 +26,10 @@ export default function CadastroPage() {
 
     return (
         <div> 
-            <header className='header-container'>
-                <img src={logoImage} alt="Erudio" />
-                <button type='button'>
-                    <FiPower size={18} color='#251FC5' />
-                </button>
-            </header>
-
             <div className="container">
-
                 <div className='title-container'>
                     <h2>Pontos de Sondagem</h2>
-                    <Link className='button' to='new'>Add New Cadastro</Link>
+                    <Link className='button' to='new'>Criar Novo Cadastro</Link>
                 </div>
                 
                 <div className="form-group search">
@@ -49,7 +39,7 @@ export default function CadastroPage() {
                         id="search"
                         placeholder="Buscar por nome da sondagem"
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)} // Atualiza o estado de pesquisa
+                        onChange={(e) => setSearchTerm(e.target.value)} 
                     />
                 </div>
         
@@ -75,7 +65,7 @@ export default function CadastroPage() {
                                 <td>
                                     <Link to={`/cadastro/edit/${cadastro.id}`} className="btn-edit">✏️ Editar</Link>
                                     <button className="btn-deactivate" >
-                                        🛑 Desativar
+                                        🛑 Deletar
                                     </button>
                                 </td>
                             </tr>

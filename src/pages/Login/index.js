@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate  } from 'react-router-dom';
-import api from '../../services/api';
+import apiBase from '../../services/apiBase';
 import logo from '../../assets/logo vertical assinatura_azul _fundo branco.jpg'
 import './styles.css';
 
@@ -17,7 +17,7 @@ export default function Login() {
             senha,
         };
         try {
-            const response = await api.post('/api/v1/usuario/', data);
+            const response = await apiBase.post('/usuario/', data); // A rota já inclui a URL base configurada
             localStorage.setItem('usuario', usuario);            
             navigate('/cadastro');
         } catch(error) {

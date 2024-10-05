@@ -81,8 +81,15 @@ body {
   
   .btn-edit {
     background-color: #007bff;
+    display: inline-block;
+    padding: 10px 20px;
     color: white;
-    margin-right: 5px;
+    border-radius: 5px;
+    font-size: 16px; 
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    margin-right: 10px; 
   }
   
   .btn-edit:hover {
@@ -91,7 +98,14 @@ body {
   
   .btn-deactivate {
     background-color: #ff4d4d;
+    display: inline-block;
+    padding: 10px 20px;
     color: white;
+    border-radius: 5px;
+    font-size: 16px; 
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
   }
   
   .btn-deactivate:hover {
