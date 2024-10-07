@@ -39,12 +39,13 @@ function MapComponent ( {cadastro, zone} ){
     }, [cadastro, zone]);
 
     return (
-        <MapContainer center={position} zoom={13} style={{ height: '500px', width: '100%' }}>
+        <MapContainer center={position} zoom={5} style={{ height: '500px', width: '100%' }}>
             <RecenterMap position={position} />
             <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
+                        url="https://{s}.google.com/vt?lyrs=s&x={x}&y={y}&z={z}"
+                        subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
+                        maxZoom={15}
+                        attribution='&copy; <a href="https://www.google.com/intl/en-US_US/help/terms_maps.html">Google Maps</a>' />    
             <Marker position={position} icon={defaultIcon}>
                 <Popup>
                     Ponto de Sondagem: {cadastro.nome} <br /> 

@@ -20,7 +20,7 @@ export default function Relatorio() {
     ];
 
     useEffect(() => {
-        apiBase.get('/cadastro/relatorio').then(response => {
+        apiBase.get('/relatorio/listar-relatorio').then(response => {
             setCadastros(response.data);
             setFilteredCadastros(response.data); 
         });
@@ -56,7 +56,7 @@ export default function Relatorio() {
     const handleGerarRelatorio = async () => {
         try {
             const ids = filteredCadastros.map((item) => item.id);
-            const response = await apiBase.post('/cadastro/gerar-relatorio', { ids });   
+            const response = await apiBase.post('/relatorio/gerar-relatorio', { ids });   
             const files = response.data; 
     
             setDocFiles(files);

@@ -17,7 +17,7 @@ export default function AppRoutes() {
                 <Route path="/cadastro" element={<CadastroList />} /> 
                 <Route path="/cadastro/edit/:id" element={<CadastroEdit />} />
                 <Route path="relatorio" element={<Relatorio />} />
-                <Route path="mapa" elemtn={<Mapa />} />
+                <Route path="mapa" element={<Mapa />} />
             </Routes>
         </BrowserRouter>
     );
