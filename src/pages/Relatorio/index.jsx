@@ -55,12 +55,20 @@ export default function Relatorio() {
 
     const handleGerarRelatorio = async () => {
         try {
-            const ids = filteredCadastros.map((item) => item.id);
-            const response = await apiBase.post('/relatorio/gerar-relatorio', { ids });   
-            const files = response.data; 
-    
-            setDocFiles(files);
-    
+            const idsList = filteredCadastros.map((item) => item.id); 
+            console.log(idsList )
+            const response = await apiBase.post('/relatorio/gerar-relatorio', idsList, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                responseType: 'blob' 
+            });
+            const blob = new Blob([response.data], { type: 'application/zip' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'Relatorios.zip';  // Nome do arquivo
+            link.click();
+
             console.log('Relatório gerado com sucesso.');
         } catch (error) {
             console.error('Erro ao gerar relatório:', error);
@@ -111,7 +119,7 @@ export default function Relatorio() {
                     <button onClick={handleAplicarFiltros}>Aplicar Filtros</button>
                 </div>
                 <div className="filtro-item-gerar-relatorio">
-                    <button onClick={handleAplicarFiltros}>Gerar Relatorio</button>
+                    <button onClick={handleGerarRelatorio}>Gerar Relatorio</button>
                 </div>
             </div>
 
