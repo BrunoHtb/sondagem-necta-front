@@ -22,7 +22,7 @@ const defaultIcon = L.icon({
 const RecenterMap = ({ position }) => {
     const map = useMap();
     useEffect(() => {
-        map.setView(position, 13);  // Centraliza o mapa na nova posição
+        map.setView(position, 13);  
     }, [position, map]);
     return null;
 };

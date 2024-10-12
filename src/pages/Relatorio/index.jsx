@@ -9,7 +9,6 @@ export default function Relatorio() {
     const [dataFim, setDataFim] = useState('');
     const [nomePonto, setNomePonto] = useState('');
     const [status, setStatus] = useState('');
-    const [docFiles, setDocFiles] = useState([]);
 
     const statusOptions = [
         { value: '', label: 'Todos' },
@@ -25,6 +24,38 @@ export default function Relatorio() {
             setFilteredCadastros(response.data); 
         });
     }, []);
+
+    const aplicarFiltros = (filtros) => {
+        let filtered = cadastros;
+        if (filtros.nome) {
+            filtered = filtered.filter((item) => 
+                item.nome && item.nome.toLowerCase().includes(filtros.nome.toLowerCase()) 
+            );
+        }
+        if (filtros.status !== '') {
+            filtered = filtered.filter((item) => {
+                const [dayStart, monthStart, yearStart] = item.dataInicioColeta.split('-');
+                const itemDataInicio = new Date(`${yearStart}-${monthStart}-${dayStart}`);
+    
+                const [dayEnd, monthEnd, yearEnd] = item.dataFimColeta.split('-');
+                const itemDataFim = new Date(`${yearEnd}-${monthEnd}-${dayEnd}`);
+    
+                const matchesDataInicio = filtros.dataInicio ? itemDataInicio >= new Date(filtros.dataInicio) : true;
+                const matchesDataFim = filtros.dataFim ? itemDataFim <= new Date(filtros.dataFim) : true;
+                const matchesStatus = item.status === filtros.status;
+    
+                return matchesDataInicio && matchesDataFim && matchesStatus;
+            });
+        }
+    
+        setFilteredCadastros(filtered);
+    };
+    
+
+    const handleNomePontoChange = (e) => {
+        setNomePonto(e.target.value);
+        aplicarFiltros({ nome: e.target.value, status, dataInicio, dataFim });
+    };
 
     const handleAplicarFiltros = () => {
         let filtered;
@@ -66,7 +97,7 @@ export default function Relatorio() {
             const blob = new Blob([response.data], { type: 'application/zip' });
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'Relatorios.zip';  // Nome do arquivo
+            link.download = 'Relatorios.zip';  
             link.click();
 
             console.log('Relatório gerado com sucesso.');
@@ -102,7 +133,7 @@ export default function Relatorio() {
                     <input
                         type="text"
                         value={nomePonto}
-                        onChange={(e) => setNomePonto(e.target.value)}
+                        onChange={handleNomePontoChange} 
                     />
                 </div>
                 <div className="filtro-item">
@@ -122,7 +153,9 @@ export default function Relatorio() {
                     <button onClick={handleGerarRelatorio}>Gerar Relatorio</button>
                 </div>
             </div>
-
+            <div className="contador">
+                    <p>Total de resultados: {filteredCadastros.length}</p>
+            </div>
             <div className="grid-container">
                 <table className="resultados-grid">
                     <thead>

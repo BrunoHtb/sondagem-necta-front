@@ -67,3 +67,8 @@
 .resultados-grid th {
     background-color: #000000;
 }
+
+.contador {
+    text-align: right;
+    font-weight: bold;
+}

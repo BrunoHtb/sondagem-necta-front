@@ -1,6 +1,8 @@
+import LabelText from './LabelTextComponent'
+
 const InputField = ({ label, name, value, onChange }) => (
     <div>
-      <label>{label}:</label>
+      <LabelText label={label} />
       <input type="text" name={name} value={value} onChange={onChange} />
     </div>
 );

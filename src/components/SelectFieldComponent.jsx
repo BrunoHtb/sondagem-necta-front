@@ -1,9 +1,10 @@
 import React from 'react';
+import LabelText from './LabelTextComponent';
 
 function Select({ label, options, selectedValue, onChange }) {
   return (
     <div>
-      <label>{label}:</label>
+      <LabelText label={label} />
       <select
         value={selectedValue}>
         {options.map((option) => (
